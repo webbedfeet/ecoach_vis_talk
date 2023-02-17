@@ -1,0 +1,472 @@
+---
+title: "Better make presentations better"
+subtitle: "Some thoughts and ~~prayers~~ suggestions"
+date: "17 February, 2023"
+date-format: long
+footer: "ECoach"
+filters:
+   - roughnotation
+execute:
+   cache: true
+---
+
+```{r}
+#| include: false
+
+# reticulate::use_condaenv('anly503', required=T)
+# reticulate::use_virtualenv("anly503", required=T)
+```
+
+## Prologue {.smaller}
+
+### Thank you to Emily Jennings :beers:
+
+She gets to see it on her last day at AZ (for now) :clap: 
+
+::: {.incremental}
+- This will be a very brief, opinionated tour of some concepts and ideas in data visualization (mainly presentation graphics)
+- I have exactly **2** slides with code, so if that's what you were here for, SORRY!!
+- I have not covered various interesting topics today, but find me if you're interested
+   - interactive graphics
+   - geospatial and network visualizations
+   - challenges of visualizing big data (not even Big Data)
+   - the entire world of Javascript and D3.js
+   - the user-friendly packages in the [Holoviz](https://www.holoviz.org) suite ({{< fa brands python >}})
+   - and no, I'm not a huge fan of `plotly`
+
+:::
+
+# Starting with thoughts and prayers
+
+## Hold your breath
+
+::: columns
+::: {.column width="33%"}
+![](images/image-119862732.png){height="500," width="400"}
+:::
+
+::: {.column width="33%"}
+![](images/image-1836879734.png){height="500,width=400"}
+
+::: fragment
+Trying to be cute, but NOOOOOO....
+:::
+:::
+
+::: {.column width="33%"}
+![](images/image-300696615.png)
+:::
+:::
+
+::: fragment
+::: {.callout-tip appearance="minimal"}
+It's important to know what's bad to understand how to be good :smile:
+:::
+:::
+
+## A little more subtle (or not)
+
+::: columns
+::: {.column width="40%"}
+![](images/image-544949765.png)
+:::
+
+::: {.column width="40%"}
+![](images/image-630947231.png)
+
+![](images/image-420843974.png){width="556"}
+:::
+
+::: {.column .smaller width="20%"}
+This issue is so common to almost be tragic today.
+
+Recently saw this in AZ internal presentations :confounded:
+:::
+:::
+
+## Just because you can doesn't mean you should
+
+![](images/image-1806837939.png)
+
+# So how can we do better?
+
+## The things not to do
+
+-   Make your audience perform **mental gymnastics**
+
+-   Use colors that are indistinguishable for a segment of your audience
+
+-   Doing a poor job of designing your visualization
+
+    -   A poor choice of the visualization type
+
+    -   No titles, labels, legends or annotations
+
+    -   Using cryptic variable names instead of English/French/Swedish/Chinese
+
+    -   Chartjunk!!
+
+    -   Increasingly, not making your visualization mobile-friendly
+
+    -   ... and the list can go on, and on, and on.....
+
+## Why do we want to visualize <u>**data**</u>
+
+1.  To be able to show patterns and relationships vividly
+
+2.  To provide insight and knowledge
+
+    -   Not just throw together some representation of the data
+    -   We're *translating* data into a visual medium to *communicate* some concept or idea to our audience
+
+3.  Take advantage of our natural visual strengths and pattern recognition ability
+
+## How do we want to visualize
+
+1.  Begin with the audience in mind (to bastardize Stephen Covey)
+2.  Design with intention
+    -   Know your story and tell it
+
+::: fragment
+> There is a mental model for how to create a data visualization. It's called the **Grammar of Graphics**.
+>
+> If you know `ggplot2`, you already know what this is.
+>
+> Otherwise, stay tuned.
+:::
+
+## The things to get right
+
+::: incremental
+-   Visual encoding of data, or how different pieces of data are represented on the canvas
+-   Visual integrity and honesty
+-   Who is your audience?
+-   Making good design choices to make visualizations clearer and more impactful
+-   and for us, reproducibility
+:::
+
+## The Grammar of Graphics
+
+::: {layout="[[1,1],[1]]"}
+![](images/image-379326986.png)
+
+![](images/image-128027959.png)
+
+::: fragment
+![](images/image-182897136.png)
+:::
+:::
+
+## Visual encodings
+
+This is various called encodings or *marks*
+
+You can encode variables (columns in tabular data) to
+
+-   coordinates or position
+-   shapes
+-   colors
+-   sizes
+-   lengths
+-   angles (maybe not)
+-   areas and volumes (but be really careful)
+
+## The bad, the ugly...
+
+::: {layout="[[1,1]]"}
+![](images/image-1131247012.png)
+
+![](images/image-563853258.png)
+:::
+
+## ... and the good
+
+::: {layout="[[1,1]]"}
+![](images/image-640249225.png)
+
+![](images/image-904676196.png)
+:::
+
+# Colors
+
+## Colors are special
+
+A lot of what makes a visualization special is the choices we make for color
+
+![](images/image-1213860790.png)
+
+## Colors are special {.smaller}
+
+### Perceptually uniform color scales
+
+::: columns
+::: {.column width="45%"}
+![](images/image-904802668.png)
+
+[vs]{.center}
+
+![](images/image-1173360401.png)
+:::
+
+::: {.column width="45%"}
+-   Some color maps, often default color maps, are evenly spaced in terms of their specification, but are not evenly spaced in terms of our perception
+
+    -   This is a problem when we want to show linear gradients of color, so the amount of color change we perceive is correlated with the amount of linear change in the data
+
+-   This has led to **perceptually uniform** palettes, like the one on the bottom
+
+    -   The changes in color are perceptually uniform
+
+::: {.callout-note appearance="simple"}
+This is best implemented in the {{< fa brands python >}} package `colorcet`, ported to the {{< fa brands r-project >}} package `cetcolor`
+:::
+:::
+:::
+
+## But for some, not so much
+
+![](images/image-2057484335.png)
+
+::: {.callout-important appearance="simple"}
+## Colorblind-safe palettes
+
+-   In R, the `viridis` package provides colorblind-safe palettes
+
+-   In Python, the viridis palettes are available within matplotlib
+
+Generally avoid red-green contrasts (heatmaps, I'm looking at you)
+:::
+
+# Graphical honesty and integrity
+
+## Graphical integrity
+
+-   Graphical integrity is closely related to the concept of visual encoding
+-   Important Guidelines for honest graphics
+    -   The representation of numbers, as measured on the surface of the graphic itself, should be directly proportional to the numerical quantities being represented
+    -   Clear, detailed, and thorough labeling should be used to defeat graphical distortion and ambiguity. Write out explanations of the data on the graphic itself.
+    -   Label important events in the data.
+    -   Graphics must not quote data out of context or manipulate encodes to mis-represent what the data is actually saying.
+
+### Intentionally mis-representing data is a form of intellectual dis-honesty. Don't do it, be honest and let the data speak for itself
+
+## Some more bad and ugly
+
+![](images/image-1641836322.png)
+
+## Some more bad and ugly
+
+![](images/image-718875677.png)
+
+# Communication: knowing your audience
+
+## Humans are wired for stories
+
+![](images/image-738965965.png)
+
+## Levels of content engagement {.smaller}
+
+![Bill Shander (https://billshander.com)](images/image-1478790333.png)
+
+::: columns
+::: {.column width="45%"}
+-   **The watercooler:** Talk about what interests you, in about 30s, and hook the audience with high-level headlines. This is to start the conversation, with the intent of having others following up
+-   **The cafe**: A 3-5 minute engagement like a blog or video, where the audience will self-select given their interests
+:::
+
+::: {.column width="8%"}
+:::
+
+::: {.column width="45%"}
+-   **The research library:** The audience is making a 1-2 hour commitment, and your content has to be rich and detailed, but you may lose the audience if you don't setup properly
+-   **The Lab:** Highly detailed engagement wher the audience can filter, sort and play with the data directly, e.g. a dashboard. The audience has to be knowledgable about the subject and understand how to explore, so you have to put signposts.
+:::
+:::
+
+## Author vs reader driven
+
+![](images/2023-02-13-12-38-42.png)
+
+# Design
+
+## Data visualization is part art, part science
+
+![Jules Morgan (https://ime.springerhealthcare.com/art-vs-science-in-a-global-pandemic/)](images/image-1933469453.png)
+
+## There are several principles for good design {.smaller}
+
+::: columns
+::: {.column width="33%"}
+#### Nathan Yau (adjustment rules)
+
+1.  Explain the encodings
+2.  Provide context
+3.  Focus on readability
+4.  Develop aesthetics
+:::
+
+::: {.column width="33%"}
+#### Ed Tufte (integrity principles)
+
+1.  Show data variation, not design variation
+2.  Do not use graphics to quote data out of context
+3.  Use clear, detailed, thorough labeling
+4.  Representation of numbers should be directly proportional to numerical quantities
+5.  Don't use more dimensions than the data require
+:::
+
+::: {.column width="33%"}
+#### Ed Tufte (design principles)
+
+1.  Show comparisons
+2.  Show causality
+3.  Use multivariate data
+4.  Completely integrate modes (like text, images, numbers)
+5.  Establish credibility
+6.  Focus on content
+:::
+:::
+
+## What can visualization reveal over summaries
+
+### A modern take: the dataSaurus
+
+![](https://damassets.autodesk.net/content/dam/autodesk/research/publications-assets/gifs/same-stats-different-graphs/same-stats-different-graphs-image-1920x1000.gif){fig-align="center"}
+
+Regardless of pattern, the points have the same marginal means and variances and the same Pearson correlation!!
+
+## Our choice of visualization determines what is revealed
+
+[![](https://damassets.autodesk.net/content/dam/autodesk/research/publications-assets/gifs/same-stats-different-graphs/boxplots.gif){fig-align="center"}](https://www.autodesk.com/research/publications/same-stats-different-graphs)
+
+## Our choice of visualization determines what is revealed
+
+[![Last 3 figs: Matejka & Fitzmaurice (2017)](https://damassets.autodesk.net/content/dam/autodesk/research/publications-assets/gifs/same-stats-different-graphs/BoxViolinSmaller.gif){fig-align="center"}](https://www.autodesk.com/research/publications/same-stats-different-graphs)
+
+## Texture in visualizations
+
+![](images/image-1024313387.png)
+
+## Texture in visualizations
+
+::: {layout="[[1,1]]"}
+![](images/image-231753628.png)
+
+![](images/image-1404694080.png)
+:::
+
+::: {.callout-tip appearance="simple"}
+My first pass at a visualization almost always has too much stuff in it.
+
+My aesthetic is to remove things so that extraneous things are removed and the pithy message is revealed.\
+\
+We **don't** need to show every data point in technicolor. [What we typically need more is **restraint**]{.rn}
+:::
+
+# Tidbits
+
+## Missing data visualization
+
+Using the {{< fa brands r-project >}} package `naniar` (also see `klib` and `missingno` ({{< fa brands python >}}))
+
+```{r}
+library(tidyverse)
+library(naniar)
+ggplot(airquality, 
+       aes(x = Solar.R, 
+           y = Ozone)) + 
+  geom_miss_point() +
+  labs(x = "Solar radiation (Langleys)",
+       y = "Mean ozone (ppb)",
+       title = "Are there missing data patterns",
+       caption = "Data obtained from `datasets::airquality`")+
+  theme_bw()
+```
+
+## UpSet plot
+
+:::: columns
+::: {.column width="47%"}
+The UpSet plot was developed in 2014 to extend the Venn Diagram to more than 3 sets.
+
+It was in reaction to the following image:
+
+![](https://upset.app/assets/images//banana.png)
+:::
+::: {.column width="47%"}
+::: {.fragment}
+### Understanding it in 3 dimensions
+
+![](https://marckvaisman.georgetown.domains/anly503/slides/W05-2023-missing-storytelling-tableau/img/2023-02-13-11-52-12.png)
+
+::: {.callout-tip appearance="simple"}
+
+### Implementations
+
+UpSet plots are implemented in the packages `UpSetR` and `ComplexHeatmap` ({{< fa brands r-project >}}) and `upsetplot` ({{< fa brands python >}})
+:::
+:::
+:::
+::::
+
+## Large data
+
+```{r}
+#| eval: false
+library(rasterly)
+x <- rnorm(1e8) # 100 Million
+y <- 3 + 2*x - 5*(x^2) + rnorm(1e8,sd=0.5)
+d <- data.frame('x'=x, 'y'=y)
+start = Sys.time()
+p <- d %>% rasterly(mapping = aes(x, y)) %>%
+  rasterly_points()
+p
+times <- (Sys.time() -start)
+```
+
+::: columns
+::: {.column width="47%"}
+![Time taken: 2.99 secs](images/rasterly.png)
+:::
+
+::: {.column width="47%"}
+### This isn't voodoo!
+
+It's a very clever use of summarizing and rasterizing the data on a grid, so the plot is not of 100 Million points but around 15000 points.
+:::
+:::
+
+## Large data
+
+This is inspired from the Python package [`datashader`](https://datashader.org)
+
+![](https://datashader.org/assets/images/usa_census.jpg)
+
+Plotting 300M points (the US census) onto a 850x500 grid, aggregated by count
+
+## Takeaway
+
+### A _readable_ chart:
+
+- Provides **clarity**
+- Has a **clear purpose**
+- Uses **visual encodings that make sense** for the **context** of the data
+- Has a **clear direction for how its interpreted**
+
+::: {.callout-tip appearance='simple'}
+Often, less is better
+:::
+
+## Shameless plug
+
+![](images/class.jpg)
+
+Spots still available :smile:
+
+Register [here](https://astrazeneca.sabacloud.com/Saba/Web_wdk/E102PRD0001/index/prelogin.rdf?spfUrl=%2FSaba%2FWeb_spf%2FE102PRD0001%2Fapp%2Fme%2Flearningeventdetail%2Fcours000000025808239%3FclassId%3Dvirtc000000001250233&classId=virtc000000001250233) for in-person and [here](https://astrazeneca.sabacloud.com/Saba/Web_spf/E102PRD0001/app/me/learningeventdetail/cours000000025808239?classId=virtc000000001250234) for self-study
+
+
+# 
+
+![](images/image-2127094368.png)
+

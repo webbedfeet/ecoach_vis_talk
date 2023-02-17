@@ -1,0 +1,71 @@
+/*-- scss:defaults --*/
+$az-plum: #830051;
+$az-lime: #c4d600;
+$az-gold: #f0ab00;
+$az-navy: #003865;
+$az-lightblue: #68d2df;
+$az-purple: #3c1053;
+$az-graphite: #3f4444;
+$az-magenta: #D0006F;
+$az-platinum: #9db0ac;
+
+$body-bg: #FFFFFF;
+$body-color: #272822;
+
+@import url(https://fonts.googleapis.com/css?family=Montserrat&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Josefin+Sans&display=swap);
+@import url(https://fonts.googleapis.com/css?family=Fira+Mono&display=swap);
+
+// font appearance
+$presentation-heading-font: "josefin Sans", sans-serif;
+$presentation-heading-color: $az-plum;
+
+$font-family-sans-serif: "Montserrat", sans-serif;
+$font-family-monospace: "Fira Mono", monospace;
+$presentation-font-size-root: 28px;
+$presentation-h1-font-size: 3.75rem;
+$presentation-h2-font-size: 3.25rem;
+$presentation-h3-font-size: 1.75rem;
+$code-block-font-size: 0.9rem;
+$code-color: $az-magenta;
+$aside-font-size: 0.8rem;
+$link-color: $az-lightblue;
+$visited-color: lighten($link-color, 20%);
+$hover-color: darken($link-color, 20%);
+
+$presentation-body-color: #ffffff;
+
+// section format
+
+$inverse-bg-color: $presentation-heading-color;
+$inverse-color: #ffffff;
+
+/*-- scss:rules --*/
+ .reveal .slides {
+   section#title-slide{
+    color: #ffffff;
+    h1 {
+      color: #ffffff;
+    }
+   }
+}
+
+.reveal .title-slide {
+  background-color: $inverse-bg-color;
+  color: $inverse-color;
+}
+.reveal aside {
+  div {
+      font-size: $aside-font-size;
+      border-top: 2px solid $az-gold;
+      margin-top: 10px;
+  }
+}
+
+.bigblockquote {
+  border-left: solid 5px $az-graphite;
+  margin-top: 30px;
+  margin-bottom: 30px;
+  padding-left: 1em;
+  font-size: 200%;
+}

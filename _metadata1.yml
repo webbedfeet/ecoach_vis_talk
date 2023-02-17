@@ -1,0 +1,31 @@
+title-slide-attributes:
+  data-background-size: contain
+  data-background-color: "#830051"
+format:
+  revealjs:
+    theme: [default, azcustom.scss]
+    css: [css/sfah.css]
+    # section-divs: true
+    chalkboard: false
+    code-overflow: wrap
+    slide-number: c/t
+    code-link: true
+    min-scale: 1.0
+    max-scale: 1.0
+    embed-resources: true
+    pdf-separate-fragments: true
+    code-fold: false
+from: markdown+emoji
+filters:
+  - roughnotation
+execute:
+  cache: true
+  echo: true
+  warning: false
+  message: false
+
+author: "Abhijit Das Gupta"
+institute: "Oncology Data Science"
+subtitle: "Data Visualization using R"
+
+
